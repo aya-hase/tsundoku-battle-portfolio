@@ -1,0 +1,14 @@
+.env
+.env.local
+node_modules
+__pycache__
+*.pyc
+result*.json
+
+
+# Next.js のビルド結果を無視（これ重要！）
+frontend/.next/
+.next/
+node_modules/
+*.exe
+stripe.exe

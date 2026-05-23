@@ -1,0 +1,5 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  /* ここにリストアップしたテーマだけが「色」として認識されます */
+  themes: coffee, retro, luxury, caramellatte, dark, light;
+}
