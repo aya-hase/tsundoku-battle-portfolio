@@ -1,99 +1,125 @@
-# Tsundoku Battle
+# 📚 積読解消アプリ「りどみー！ READ ME! 」 
 
-<br>
+買って満足して読んでいない本（積読）を「未完了タスク」から「今の自分を満たす選択肢」へと再定義し、生成AIによるユーモア溢れるプレゼンバトルを通して読書への一歩を後押しするWebアプリケーションです。
 
-### 構成
+---
 
-<p>フロントエンド：Next.js (React)</p>
-<p>バックエンド：FastAPI (Python)</p>
-<p>データベース：Supabase</p>
-<p>キャッシュ：Redis</p>
-<p>決済：Stripe</p>
-<p>実行環境：Docker / Docker Compose</p>
+## 🌟 アプリ概要
 
-<br>
+本を読む意欲はあるにも関わらず、忙しい日常の中で「どれを読もうか選ぶだけのエネルギー」が残っておらず、積読が慢性化している人は少なくありません。既存の管理アプリのように単に「記録・管理」するだけでは、この「選択と着手の負担」という課題は解決できません。
 
-## リポジトリの取得
+「りどみー！」は、本棚に眠る積読本たちがユーザーに対して**「今、自分を読むべき価値」を自らプレゼンし、2冊の本が価値を競い合う「対談（プレゼンバトル）体験」**を提供します。
+ユーザーが今のジャンルや気分を選ぶだけで、意思決定を自動化し、ワクワクした気持ちでスムーズに本を開ける状態を作ります。
 
-<p>git clone https://github.com/your-org/tsundoku-battle.git</p>
-<p>cd tsundoku-battle</p>
+---
 
-<br>
+## ✨ 主な機能
 
-## 環境変数の設定（初回のみ）
+* **🔐 ユーザー認証・属性登録**
+  * メールアドレスとパスワードによるセキュアなログイン（JWT認証）。新規登録時には年代・性別・職業を登録し、ユーザーの背景に合わせた提案の基盤を作ります。
+* **📖 本棚管理 & 楽天Books API連携**
+  * 登録したい書籍の題名や作者名から検索し、楽天Books API経由で正確な書籍メタデータを取得して本棚へ追加。積読・既読のステータス管理が可能です。
+* **⚔️ AIによる「本の声を聴く」プレゼンバトル**
+  * 本棚の未読本からAIが2冊を選出。ユーザーが選択した【ジャンル】や【今の気分】の条件を元に、本同士が価値を競い合うリアルタイムな対談演出を生成します。
+* **💬 評価入力によるインタラクティブな深掘り**
+  * バトル中、さらに追加情報が欲しい場合は「いいね」ボタンで追加のプレゼンを要求。他の本を見たい場合は「いまいち」ボタンで別の本による再バトルが可能です。
+* **💳 Stripeによるプレミアムプラン提供**
+  * サブスクリプション決済基盤（Stripe API / Webhook）を完備。有料会員向けにユーザー属性に特化したより高度な提案機能などを提供します。
 
-<p>①.env ファイルを作成（ルート直下）</p>
-<p>touch .env</p>
+---
 
-<p>②.env の中身（例）</p>
-<p># ======================</p>
-<p># Supabase</p>
-<p># ======================</p>
-<p>SUPABASE_URL=https://gb・・・・・</p>
+## 🛠️ 技術スタック
 
-<p># Backend ONLY</p>
-<p>SUPABASE_SERVICE_ROLE_KEY=sb_service_role_xxxxxxxxxxxxx</p>
+* **Frontend:** Next.js, TypeScript, Tailwind CSS, daisyUI
+* **Backend:** FastAPI (Python), SQLAlchemy, Pydantic, JWT認証
+* **Database:** Supabase (PostgreSQL)
+* **Infrastructure:** Docker, Docker Compose
+* **External APIs / Payment / AI:**
+  * 楽天Books API（書籍情報取得）
+  * Stripe API / Stripe Webhook（決済管理）
+  * OpenAI API（プレゼン・バトル展開自動生成）
+* **Code Quality / Tools:** Pytest, ESLint, Prettier, Ruff, GitHub Actions
 
-<p># Frontend ONLY</p>
-<p>NEXT_PUBLIC_SUPABASE_URL=https://gb・・・・・</p>
-<p>NEXT_PUBLIC_SUPABASE_ANON_KEY=sb_publishable_xxxxxxxxxxxxx</p>
+---
 
-<p># ======================</p>
-<p># Redis（Docker内）</p>
-<p># ======================</p>
-<p>REDIS_URL=redis://redis:6379</p>
+## 📱 画面一覧
 
-<p># ======================</p>
-<p># Stripe</p>
-<p># ======================</p>
-<p>STRIPE_SECRET_KEY=sk_test_xxxxx</p>
-<p>STRIPE_WEBHOOK_SECRET=whsec_xxxxx</p>
+* **ホーム画面（本棚画面）**
+  * 楽天Books APIを用いた書籍検索・本棚追加、積読一覧の確認、および「ジャンル」「気分」を選択してバトルを開始するメイン画面です。
+* **アクション画面（バトル画面）**
+  * 選出された2冊の本がAIを通じて価値を競い合う対談表示画面です。「いまいち（再バトル）」「いいね（詳細追加）」「あなたに決めた（最終決定）」の操作が行えます。
+* **結果画面**
+  * 最終的に選ばれた1冊の演出メッセージを表示し、スムーズな読書行動への移行を促す画面です。
+* **ログイン・新規登録画面**
+  * メールアドレス、パスワードによる認証、および初回登録時のユーザー属性（年齢・性別・職業）の入力画面です。
 
-<p># ======================</p>
-<p># Auth</p>
-<p># ======================</p>
-<p>JWT_SECRET=change-me</p>
+---
 
-<p># ======================</p>
-<p># API</p>
-<p># ======================</p>
-<p>NEXT_PUBLIC_API_BASE_URL=http://localhost:8000</p>
+## 🚀 環境構築・起動手順
 
-<br>
+本プロジェクトはフロントエンドとバックエンドがDockerコンテナ化されており、以下の手順で簡単にローカル環境を立ち上げることができます。
 
+### 1. 前提条件
+* Docker / Docker Compose がインストールされていること
+* 各種APIキー（楽天Books, OpenAI, Stripe）が設定済みであること
+
+### 2. コンテナの起動
+プロジェクトのルートディレクトリで以下のコマンドを実行します。
+
+* **初回（またはビルドし直す場合）:**
+  ```bash
+  docker compose up --build
+  
 ## 起動手順（フロント＋バック）
 
 <p>・Docker Compose 起動（初回はビルドあり）</p>
 <p>docker compose up --build</p>
 
-<p>・2回目以降　：　docker compose up</p>
+2回目以降の通常の起動:
 
-<p>＜動作確認＞</p>
-<p>・フロントエンド　：　http://localhost:3000</p>
-<p>・バックエンド（Swagger UI）　：　http://localhost:8000/docs</p>
-<p>・ヘルスチェック　：　http://localhost:8000/health  （{"status":"ok"}と表示されればOK）</p>
+Bash
+docker compose up
+コンテナの停止方法: Ctrl + C
 
-<p>停止方法　：　Ctrl + C</p>
+⚠️ 注意事項
+フロントエンドはバックエンドが完全に起動していないとAPI通信に失敗します。必ずバックエンドが起動していることを確認してください。
 
-<p>★注意事項　：　フロントエンドは バックエンドが起動していないとAPI通信に失敗します</p>
+3. 動作確認
+各コンテナが起動後、ブラウザで以下のURLにアクセスして動作確認を行います。
 
-## 依存関係
+フロントエンド (UI): http://localhost:3000
 
-<p>frontend → package.json</p>
-<p>backend → requirements.txt</p>
-<p>追加ライブラリは 必ずチームに共有してください</p>
+バックエンド (Swagger UI): http://localhost:8000/docs
 
-## トラブルシューティング
+APIヘルスチェック: http://localhost:8000/health
+（ブラウザに {"status":"ok"} と表示されれば正常です）
 
-<p>〇コンテナが起動しない場合</p>
-<p>docker compose down -v</p>
-<p>docker compose build --no-cache</p>
-<p>docker compose up</p>
+📦 依存関係 (Dependencies)
+環境の整合性を保つため、パッケージやライブラリは以下のファイルで管理されています。
+※追加ライブラリをインストールした場合は、必ずチームへ共有してください。
 
-<p>〇FastAPI が落ちる場合</p>
-<p>backend/main.py に app = FastAPI() があるか確認</p>
+frontend ──> package.json
 
-<p>〇Reactインストール</p>
+backend ──> requirements.txt
+
+🛠️ トラブルシューティング
+〇 コンテナが起動しない場合
+過去のDockerボリュームの競合やキャッシュが原因の可能性があります。一度ボリュームをクリーンにしてから再ビルドを行ってください。
+
+```Bash
+docker compose down -v
+docker compose build --no-cache
+docker compose up
+```
+
+## FastAPI が落ちる場合
+backend/main.py に app = FastAPI() のインスタンス宣言が正しく記述されているか確認してください。
+
+## フロントエンドで型エラーが出る場合（Reactインストール）
+ローカル環境の型定義ファイルを最新にするため、フロントエンドのディレクトリに移動して型パッケージの再インストールを実行してください。
+
+```Bash
 cd frontend
-# 型定義とTypeScriptをローカルにもインストール
 npm install --save-dev typescript @types/react @types/node @types/react-dom
+```
+
