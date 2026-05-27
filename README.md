@@ -30,14 +30,11 @@
 
 ## 🛠️ 技術スタック
 
-* **Frontend:** Next.js, TypeScript, Tailwind CSS, daisyUI
-* **Backend:** FastAPI (Python), SQLAlchemy, Pydantic, JWT認証
-* **Database:** Supabase (PostgreSQL)
-* **Infrastructure:** Docker, Docker Compose
-* **External APIs / Payment / AI:**
-  * 楽天Books API（書籍情報取得）
-  * Stripe API / Stripe Webhook（決済管理）
-  * OpenAI API（プレゼン・バトル展開自動生成）
+* **フロントエンド:** Next.js, React, TypeScript, Tailwind CSS, daisyUI
+* **バックエンド:** FastAPI (Python), Redis（セッション管理）
+* **DB・認証:** Supabase
+* **インフラ:** Docker, GitHub
+* **外部API・決済・AI:** 楽天Books API, Stripe, OpenAI API
 * **Code Quality / Tools:** Pytest, ESLint, Prettier, Ruff, GitHub Actions
 
 ---
